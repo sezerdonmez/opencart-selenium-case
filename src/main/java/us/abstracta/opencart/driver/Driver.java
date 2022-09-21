@@ -17,4 +17,5 @@ public abstract class Driver {
     public abstract void waitForAjax();
     public abstract void hoverToElement(WebElement element);
     public abstract void highlightElement(WebElement element);
+    public abstract void wait(int sec) throws InterruptedException;
 }

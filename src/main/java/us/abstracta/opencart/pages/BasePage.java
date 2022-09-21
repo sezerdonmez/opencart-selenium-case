@@ -13,7 +13,7 @@ import java.util.Random;
 import java.util.List;
 
 public class BasePage {
-    private final Driver driver;
+    protected final Driver driver;
 
     public BasePage(Driver driver) {
         this.driver = driver;
@@ -23,14 +23,18 @@ public class BasePage {
         return (driver.findElement(by).isDisplayed());
     }
 
+    public void clickElementBy(By by, boolean isWithHover, boolean isWithHighlight) {
+        WebElement elementToClick = driver.findElement(by);
+        if (isWithHover)
+            driver.hoverToElement(elementToClick);
+        if (isWithHighlight)
+            driver.highlightElement(elementToClick);
+        elementToClick.click();
+    }
+
     public int generateRandomNumber (int size) {
         Random random = new Random();
         return random.nextInt(size);
-    }
-
-    public void wait (int seconds) throws InterruptedException {
-        Thread.sleep(seconds * 1000);
-        System.out.println("Waited " + seconds + " seconds.");
     }
 
     public int getElementWithTextInList (List<WebElement> elementList, final String text) {
@@ -56,14 +60,4 @@ public class BasePage {
         String randomKeyword = RandomStringUtils.random(length, isIncludeLetters, isIncludeNumbers);
         return randomKeyword + "@sezermail.com";
     }
-
-   /* public void waitAjaxRequest() throws InterruptedException {
-        while (true) {
-            Boolean ajaxIsComplete = (Boolean) ((JavascriptExecutor)driver).executeScript("return jQuery.active == 0");
-            if (ajaxIsComplete){
-                break;
-            }
-            Thread.sleep(100);
-        }
-    }*/
 }

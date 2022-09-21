@@ -60,7 +60,7 @@ public class CoreDriver extends Driver {
 
     @Override
     public WebElement findElement(By locator) {
-        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         return webDriver.findElement(locator);
     }
 
@@ -86,5 +86,11 @@ public class CoreDriver extends Driver {
     public void highlightElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) webDriver;
         js.executeScript("arguments[0].style.background='yellow'",element);
+    }
+
+    @Override
+    public void wait(int sec) throws InterruptedException {
+        Thread.sleep(sec * 1000L);
+        System.out.println("Waited " + sec + " seconds.");
     }
 }

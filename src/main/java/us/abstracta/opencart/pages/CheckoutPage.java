@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import us.abstracta.opencart.driver.Driver;
 
 import java.util.List;
 
@@ -33,14 +34,12 @@ public class CheckoutPage extends BasePage {
     private final By confirmOrderButton = By.cssSelector("#button-confirm");
 
 
-    public CheckoutPage(WebDriver driver) {
+    public CheckoutPage(Driver driver) {
         super(driver);
     }
 
     public void clickOnRadioButton () {
-        waitUntilElementLocated(guestRadioButton);
-        WebElement guestRadio = driver.findElement(guestRadioButton);
-        clickToElement(guestRadio);
+        clickElementBy(guestRadioButton, false, false);
     }
 
     public Boolean checkGuestRadioButtonSelected () {

@@ -57,4 +57,9 @@ public class DriverDecorator extends Driver {
     public void highlightElement(WebElement element) {
         driver.highlightElement(element);
     }
+
+    @Override
+    public void wait(int sec) throws InterruptedException {
+        driver.wait(sec);
+    }
 }
