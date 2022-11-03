@@ -19,5 +19,7 @@ public abstract class Driver {
     public abstract void highlightElement(WebElement element);
 
     public abstract void waitUntilElementVisible (By locator);
+
+    public abstract void waitUntilTextVisibleElement (By locator , String text);
     public abstract void wait(int sec) throws InterruptedException;
 }

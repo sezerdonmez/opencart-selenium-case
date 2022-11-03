@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class BasePage {
-    protected static Driver driver;
+    protected final Driver driver;
 
     public BasePage(Driver driver) {
         this.driver = driver;
@@ -69,12 +69,14 @@ public class BasePage {
         elementToTypeText.clear();
         assertEquals("", elementToTypeText.getText(), "Element should not have any text.");
         elementToTypeText.sendKeys(text);
-        assertEquals(text, elementToTypeText.getText(), "Element should have text: " + text);
+        assertEquals(text, elementToTypeText.getAttribute("value"), "Element should have text: " + text);
     }
     public void selectWithTextOnSelectBox (By by, String text) {
         WebElement selectBox = driver.findElement(by);
         Select select = new Select(selectBox);
         select.selectByVisibleText(text);
+        WebElement selectedOption = select.getFirstSelectedOption();
+        assertEquals(text, selectedOption.getText(), "Selected option should be " + text);
     }
 
     public String getElementText (By by) {

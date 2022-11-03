@@ -35,6 +35,9 @@ public class CompleteCheckout extends BaseTest {
         assertEquals("Adana", checkoutPage.getFirstValidRegionNameOnSelectBox(), "Should be Adana first valid select box option");
         checkoutPage.chooseOnRegionSelectBox("İstanbul");
         checkoutPage.clickOnBillingContinueButton();
+        assertTrue(checkoutPage.checkShippingMenuOpened(),
+                "Should open Delivery Method menu");
+        checkoutPage.clickOnShippingContinueButton();
         assertTrue(checkoutPage.checkPaymentMethodMenuOpened(),
                 "Should open Payment Method menu");
         checkoutPage.clickOnTermsAndConditionInput();
@@ -42,7 +45,7 @@ public class CompleteCheckout extends BaseTest {
         assertTrue(checkoutPage.checkConfirmOrderMenuOpened(),
                 "Should open Confirm Order menu");
         checkoutPage.clickConfirmOrderButton();
-        orderSuccessPage.waitUntilContentVisible();
+        orderSuccessPage.waitUntilSuccessBreadcrumbVisible();
         assertEquals("Your order has been placed!", orderSuccessPage.getCurrentPageTitle(), "Should navigate to Order Success Page");
     }
 }

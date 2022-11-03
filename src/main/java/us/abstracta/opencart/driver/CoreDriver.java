@@ -67,7 +67,7 @@ public class CoreDriver extends Driver {
 
     @Override
     public List<WebElement> findElements(By locator) {
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        webDriverWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
         return webDriver.findElements(locator);
     }
 
@@ -87,12 +87,17 @@ public class CoreDriver extends Driver {
     @Override
     public void highlightElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) webDriver;
-        js.executeScript("arguments[0].style.background='yellow'",element);
+        js.executeScript("arguments[0].style.background='yellow'", element);
     }
 
     @Override
     public void waitUntilElementVisible(By locator) {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    @Override
+    public void waitUntilTextVisibleElement(By locator, String text) {
+        webDriverWait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
     }
 
     @Override

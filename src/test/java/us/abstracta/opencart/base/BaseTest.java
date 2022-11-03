@@ -1,11 +1,8 @@
 package us.abstracta.opencart.base;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.Browser;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import us.abstracta.opencart.driver.CoreDriver;
 import us.abstracta.opencart.driver.Driver;
 import us.abstracta.opencart.pages.*;
@@ -28,19 +25,18 @@ public class BaseTest {
     public void testInit() {
         driver = new CoreDriver();
         driver.start(Browser.CHROME);
-        navigateWebsite();
         basePage = new BasePage(driver);
         homePage = new HomePage(driver);
         cartPage = new CartPage(driver);
         checkoutPage = new CheckoutPage(driver);
         orderSuccessPage = new OrderSuccessPage(driver);
+        navigateWebsite();
     }
 
-    @AfterMethod
+    /*@AfterMethod
     public void tearDown() {
         driver.quit();
-    }
-
+    }*/
     public void navigateWebsite() {
         driver.goToUrl(URL);
         assertEquals(TITLE, driver.getTitle(), "Can't navigate to Open Cart homepage");

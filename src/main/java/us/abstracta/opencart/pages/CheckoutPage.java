@@ -26,8 +26,10 @@ public class CheckoutPage extends BasePage {
     private final By regionSelectBoxOptions = By.cssSelector("[name='zone_id'] option");
     private final By billingContinueButton = By.cssSelector("#button-guest");
     private final By paymentMethodRadio = By.name("payment_method");
+    private final By shippingMethodRadio = By.name("shipping_method");
     private final By termsConditionAccept = By.cssSelector("[name='agree']");
     private final By paymentContinueButton = By.cssSelector("#button-payment-method");
+    private final By shippingContinueButton = By.cssSelector("#button-shipping-method");
     private final By orderInfoTable = By.cssSelector(".table-responsive");
     private final By confirmOrderButton = By.cssSelector("#button-confirm");
 
@@ -56,6 +58,10 @@ public class CheckoutPage extends BasePage {
         return isDisplayed(paymentMethodRadio);
     }
 
+    public Boolean checkShippingMenuOpened () {
+        return isDisplayed(shippingMethodRadio);
+    }
+
     public Boolean checkConfirmOrderMenuOpened () {
         return isDisplayed(orderInfoTable);
     }
@@ -76,19 +82,18 @@ public class CheckoutPage extends BasePage {
         typeTextToElement(emailInput, generateRandomEmail(5, false, true));
     }
 
-    public void chooseOnCountrySelectBox (String countryName) throws InterruptedException {
+    public void chooseOnCountrySelectBox (String countryName) {
         selectWithTextOnSelectBox(countrySelectBox, countryName);
-        driver.waitForAjax();
     }
 
     public String getFirstValidRegionNameOnSelectBox () {
         List<WebElement> regionOptions = driver.findElements(regionSelectBoxOptions);
+        System.out.println(regionOptions.get(1));
         return regionOptions.get(1).getText();
     }
 
-    public void chooseOnRegionSelectBox (String regionName) throws InterruptedException {
+    public void chooseOnRegionSelectBox (String regionName) {
         selectWithTextOnSelectBox(regionSelectBox, regionName);
-        driver.waitForAjax();
     }
 
     public void clickOnBillingContinueButton () {
@@ -103,8 +108,11 @@ public class CheckoutPage extends BasePage {
         clickElementBy(paymentContinueButton, false, true);
     }
 
+    public void clickOnShippingContinueButton () {
+        clickElementBy(shippingContinueButton, false, true);
+    }
+
     public void clickConfirmOrderButton () {
         clickElementBy(confirmOrderButton, false, false);
-        driver.waitForAjax();
     }
   }
