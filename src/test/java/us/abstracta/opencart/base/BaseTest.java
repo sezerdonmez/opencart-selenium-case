@@ -3,30 +3,46 @@ package us.abstracta.opencart.base;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.Browser;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import us.abstracta.opencart.driver.CoreDriver;
 import us.abstracta.opencart.driver.Driver;
+import us.abstracta.opencart.pages.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BaseTest {
 
     protected Driver driver;
-    private static final String url = "https://opencart.abstracta.us/";
-    private static final String title = "Your Store";
+    private static final String URL = "https://opencart.abstracta.us/";
+    private static final String TITLE = "Your Store";
 
-    @BeforeAll
+    public static BasePage basePage;
+    public static CartPage cartPage;
+    public static HomePage homePage;
+    public static CheckoutPage checkoutPage;
+    public static OrderSuccessPage orderSuccessPage;
+
+    @BeforeMethod
     public void testInit() {
         driver = new CoreDriver();
         driver.start(Browser.CHROME);
+        navigateWebsite();
+        basePage = new BasePage(driver);
+        homePage = new HomePage(driver);
+        cartPage = new CartPage(driver);
+        checkoutPage = new CheckoutPage(driver);
+        orderSuccessPage = new OrderSuccessPage(driver);
     }
 
-    @AfterAll
+    @AfterMethod
     public void tearDown() {
         driver.quit();
     }
 
     public void navigateWebsite() {
-        driver.goToUrl(url);
-        assertEquals(title, driver.getTitle(), "Can't navigate to Open Cart homepage");
+        driver.goToUrl(URL);
+        assertEquals(TITLE, driver.getTitle(), "Can't navigate to Open Cart homepage");
     }
 }

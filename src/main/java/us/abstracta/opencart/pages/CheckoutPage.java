@@ -11,7 +11,6 @@ import java.util.List;
 public class CheckoutPage extends BasePage {
 
     private final By guestRadioButton = By.cssSelector("input[value='guest']");
-    private final By registerRadioButton = By.cssSelector("input[value='register']");
     private final By continueButton = By.cssSelector("#button-account");
     private final By firstNameInput = By.name("firstname");
     private final By lastnameInput = By.name("lastname");
@@ -26,7 +25,6 @@ public class CheckoutPage extends BasePage {
     private final By regionSelectBox = By.name("zone_id");
     private final By regionSelectBoxOptions = By.cssSelector("[name='zone_id'] option");
     private final By billingContinueButton = By.cssSelector("#button-guest");
-    private final By paymentMethodContainer = By.cssSelector("[id='collapse-payment-method']");
     private final By paymentMethodRadio = By.name("payment_method");
     private final By termsConditionAccept = By.cssSelector("[name='agree']");
     private final By paymentContinueButton = By.cssSelector("#button-payment-method");
@@ -43,64 +41,44 @@ public class CheckoutPage extends BasePage {
     }
 
     public Boolean checkGuestRadioButtonSelected () {
-        WebElement guestRadio = driver.findElement(guestRadioButton);
-        return guestRadio.isSelected();
+        return isSelected(guestRadioButton);
     }
 
     public void clickOnContinueButton () {
-        waitUntilElementLocated(continueButton);
-        WebElement continueCheckout = driver.findElement(continueButton);
-        clickToElement(continueCheckout);
+        clickElementBy(continueButton, false, false);
     }
 
     public Boolean checkBillingDetailsMenuOpened () {
-        waitUntilElementLocated(firstNameInput);
-        WebElement firstName = driver.findElement(firstNameInput);
-        return firstName.isDisplayed();
+        return isDisplayed(firstNameInput);
     }
 
     public Boolean checkPaymentMethodMenuOpened () {
-        waitUntilElementLocated(paymentMethodRadio);
-        WebElement paymentMethod = driver.findElement(paymentMethodRadio);
-        return paymentMethod.isDisplayed();
+        return isDisplayed(paymentMethodRadio);
     }
 
     public Boolean checkConfirmOrderMenuOpened () {
-        waitUntilElementLocated(orderInfoTable);
-        WebElement orderInfo = driver.findElement(orderInfoTable);
-        return orderInfo.isDisplayed();
+        return isDisplayed(orderInfoTable);
     }
 
     public void fillOutInputsWithRandomKeywords () {
-        driver.findElement(firstNameInput)
-                .sendKeys(generateRandomString(5, false, true));
-        driver.findElement(lastnameInput)
-                .sendKeys(generateRandomString(5, false, true));
-        driver.findElement(telephoneInput)
-                .sendKeys(generateRandomString(5, false, true));
-        driver.findElement(companyInput)
-                .sendKeys(generateRandomString(5, false, true));
-        driver.findElement(addressOneInput)
-                .sendKeys(generateRandomString(5, false, true));
-        driver.findElement(addressTwoInput)
-                .sendKeys(generateRandomString(5, false, true));
-        driver.findElement(cityInput)
-                .sendKeys(generateRandomString(5, false, true));
-        driver.findElement(postCodeInput)
-                .sendKeys(generateRandomString(5, false, true));
+        typeTextToElement(firstNameInput, generateRandomString(5, false, true));
+        typeTextToElement(lastnameInput, generateRandomString(5, false, true));
+        typeTextToElement(telephoneInput, generateRandomString(5, false, true));
+        typeTextToElement(companyInput, generateRandomString(5, false, true));
+        typeTextToElement(addressOneInput, generateRandomString(5, false, true));
+        typeTextToElement(addressOneInput, generateRandomString(5, false, true));
+        typeTextToElement(addressTwoInput, generateRandomString(5, false, true));
+        typeTextToElement(cityInput, generateRandomString(5, false, true));
+        typeTextToElement(postCodeInput, generateRandomString(5, false, true));
     }
 
     public void typeValidEmailAddress () {
-        waitUntilElementLocated(emailInput);
-        WebElement emailInputField = driver.findElement(emailInput);
-        emailInputField.sendKeys(generateRandomEmail(5, false, true));
+        typeTextToElement(emailInput, generateRandomEmail(5, false, true));
     }
 
     public void chooseOnCountrySelectBox (String countryName) throws InterruptedException {
-        WebElement countryChooseSelectBox = driver.findElement(countrySelectBox);
-        Select country = new Select(countryChooseSelectBox);
-        country.selectByVisibleText(countryName);
-        waitAjaxRequest();
+        selectWithTextOnSelectBox(countrySelectBox, countryName);
+        driver.waitForAjax();
     }
 
     public String getFirstValidRegionNameOnSelectBox () {
@@ -109,32 +87,24 @@ public class CheckoutPage extends BasePage {
     }
 
     public void chooseOnRegionSelectBox (String regionName) throws InterruptedException {
-        WebElement regionChooseSelectBox = driver.findElement(regionSelectBox);
-        Select region = new Select(regionChooseSelectBox);
-        region.selectByVisibleText(regionName);
-        waitAjaxRequest();
+        selectWithTextOnSelectBox(regionSelectBox, regionName);
+        driver.waitForAjax();
     }
 
     public void clickOnBillingContinueButton () {
-        WebElement billingContinue = driver.findElement(billingContinueButton);
-        clickToElement(billingContinue);
+        clickElementBy(billingContinueButton, false, true);
     }
 
     public void clickOnTermsAndConditionInput () {
-        waitUntilElementVisible(termsConditionAccept);
-        WebElement termsAndConditionInput = driver.findElement(termsConditionAccept);
-        clickToElement(termsAndConditionInput);
+        clickElementBy(termsConditionAccept, false, true);
     }
 
     public void clickOnPaymentContinueButton () {
-        WebElement paymentContinue = driver.findElement(paymentContinueButton);
-        clickToElement(paymentContinue);
+        clickElementBy(paymentContinueButton, false, true);
     }
 
-    public void clickConfirmOrderButton () throws InterruptedException {
-        waitUntilElementVisible(confirmOrderButton);
-        WebElement confirmOrder = driver.findElement(confirmOrderButton);
-        clickToElement(confirmOrder);
-        waitAjaxRequest();
+    public void clickConfirmOrderButton () {
+        clickElementBy(confirmOrderButton, false, false);
+        driver.waitForAjax();
     }
   }

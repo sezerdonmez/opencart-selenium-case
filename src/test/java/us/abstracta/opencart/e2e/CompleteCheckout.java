@@ -1,25 +1,15 @@
 package us.abstracta.opencart.e2e;
 
-
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import us.abstracta.opencart.base.BaseTest;
-import us.abstracta.opencart.pages.CartPage;
-import us.abstracta.opencart.pages.CheckoutPage;
-import us.abstracta.opencart.pages.HomePage;
-import us.abstracta.opencart.pages.OrderSuccessPage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CompleteCheckout extends BaseTest {
 
-    HomePage homePage = new HomePage(driver);
-    CartPage cartPage = new CartPage(driver);
-    CheckoutPage checkoutPage = new CheckoutPage(driver);
-    OrderSuccessPage orderSuccessPage = new OrderSuccessPage(driver);
-
     @Test
     public void checkoutWithGuestUser() throws InterruptedException {
-        homePage.addToCartRandomly();
+        homePage.addToCartFirstItem();
         assertTrue(homePage.checkIfProductAddedToCart().contains("1 item(s)"),
                 "Should add 1 item to cart");
         assertTrue(homePage.checkSuccessAlertBoxText().contains("Success: You have added"),

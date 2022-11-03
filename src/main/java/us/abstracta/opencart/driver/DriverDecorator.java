@@ -59,6 +59,11 @@ public class DriverDecorator extends Driver {
     }
 
     @Override
+    public void waitUntilElementVisible(By locator) {
+        driver.waitUntilElementVisible(locator);
+    }
+
+    @Override
     public void wait(int sec) throws InterruptedException {
         driver.wait(sec);
     }

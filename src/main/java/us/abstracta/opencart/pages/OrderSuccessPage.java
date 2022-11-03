@@ -1,5 +1,6 @@
 package us.abstracta.opencart.pages;
 
+import com.sun.security.auth.NTSidUserPrincipal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import us.abstracta.opencart.driver.Driver;
@@ -13,6 +14,6 @@ public class OrderSuccessPage extends BasePage {
     }
 
     public void waitUntilContentVisible() {
-        waitUntilElementVisible(successContent);
+        driver.waitUntilElementVisible(successContent);
     }
 }

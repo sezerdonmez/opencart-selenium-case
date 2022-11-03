@@ -1,6 +1,7 @@
 package us.abstracta.opencart.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import net.jodah.failsafe.internal.util.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -60,7 +61,7 @@ public class CoreDriver extends Driver {
 
     @Override
     public WebElement findElement(By locator) {
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return webDriver.findElement(locator);
     }
 
@@ -80,12 +81,18 @@ public class CoreDriver extends Driver {
     public void hoverToElement(WebElement element) {
         Actions actions = new Actions(webDriver);
         actions.moveToElement(element);
+        Assert.isTrue(element.isDisplayed(), "Hovered element is not displayed");
     }
 
     @Override
     public void highlightElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) webDriver;
         js.executeScript("arguments[0].style.background='yellow'",element);
+    }
+
+    @Override
+    public void waitUntilElementVisible(By locator) {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     @Override

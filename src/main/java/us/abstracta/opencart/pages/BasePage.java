@@ -2,28 +2,32 @@ package us.abstracta.opencart.pages;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import us.abstracta.opencart.driver.Driver;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Random;
 import java.util.List;
+import java.util.UUID;
 
 public class BasePage {
-    protected final Driver driver;
+    protected static Driver driver;
 
     public BasePage(Driver driver) {
         this.driver = driver;
     }
 
-    public Boolean isDisplayed(By by) {
+    public Boolean isDisplayed (By by) {
         return (driver.findElement(by).isDisplayed());
     }
 
-    public void clickElementBy(By by, boolean isWithHover, boolean isWithHighlight) {
+    public Boolean isSelected (By by) {
+       return driver.findElement(by).isSelected();
+    }
+
+    public void clickElementBy (By by, boolean isWithHover, boolean isWithHighlight) {
         WebElement elementToClick = driver.findElement(by);
         if (isWithHover)
             driver.hoverToElement(elementToClick);
@@ -37,8 +41,7 @@ public class BasePage {
         return random.nextInt(size);
     }
 
-    public int getElementWithTextInList (List<WebElement> elementList, final String text) {
-
+    public WebElement getElementWithTextInList (List<WebElement> elementList, final String text) {
         boolean isElementHere = false;
         int indexOfElement = 0;
         for (int i = 0; i <= elementList.size(); i++) {
@@ -49,7 +52,7 @@ public class BasePage {
             }
         }
         assertTrue(isElementHere, "Element not found with text: " + text);
-        return indexOfElement;
+        return elementList.get(indexOfElement);
     }
 
     public String generateRandomString (int length, boolean isIncludeNumbers, boolean isIncludeLetters) {
@@ -57,7 +60,39 @@ public class BasePage {
     }
 
     public String generateRandomEmail (int length, boolean isIncludeNumbers, boolean isIncludeLetters) {
-        String randomKeyword = RandomStringUtils.random(length, isIncludeLetters, isIncludeNumbers);
-        return randomKeyword + "@sezermail.com";
+        UUID uuid = UUID.randomUUID();
+        return uuid + "@opencartrandommail.com";
+    }
+
+    public void typeTextToElement (By by, String text) {
+        WebElement elementToTypeText = driver.findElement(by);
+        elementToTypeText.clear();
+        assertEquals("", elementToTypeText.getText(), "Element should not have any text.");
+        elementToTypeText.sendKeys(text);
+        assertEquals(text, elementToTypeText.getText(), "Element should have text: " + text);
+    }
+    public void selectWithTextOnSelectBox (By by, String text) {
+        WebElement selectBox = driver.findElement(by);
+        Select select = new Select(selectBox);
+        select.selectByVisibleText(text);
+    }
+
+    public String getElementText (By by) {
+        WebElement element = driver.findElement(by);
+        return element.getText();
+    }
+
+    public String getCssValue (By by, String cssProp) {
+        WebElement element = driver.findElement(by);
+        return element.getCssValue(cssProp);
+    }
+
+    public String getElementAttribute (By by, String attributeName) {
+        WebElement element = driver.findElement(by);
+        return element.getAttribute(attributeName);
+    }
+
+    public String getCurrentPageTitle () {
+        return driver.getTitle();
     }
 }
