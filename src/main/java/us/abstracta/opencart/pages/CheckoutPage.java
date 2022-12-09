@@ -79,7 +79,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public void typeValidEmailAddress () {
-        typeTextToElement(emailInput, generateRandomEmail(5, false, true));
+        typeTextToElement(emailInput, generateRandomEmail());
     }
 
     public void chooseOnCountrySelectBox (String countryName) {

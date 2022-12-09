@@ -59,7 +59,7 @@ public class BasePage {
         return RandomStringUtils.random(length, isIncludeLetters, isIncludeNumbers);
     }
 
-    public String generateRandomEmail (int length, boolean isIncludeNumbers, boolean isIncludeLetters) {
+    public String generateRandomEmail () {
         UUID uuid = UUID.randomUUID();
         return uuid + "@opencartrandommail.com";
     }
